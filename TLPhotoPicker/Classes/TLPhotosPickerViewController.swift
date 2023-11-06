@@ -686,10 +686,31 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
         }
     }
     
+    private func gotoAppPrivacySettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString),
+            UIApplication.shared.canOpenURL(url) else {
+                assertionFailure("Not able to open App privacy settings")
+                return
+        }
+
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
     private func handleDeniedCameraAuthorization() {
         DispatchQueue.main.async {
             self.delegate?.handleNoCameraPermissions(picker: self)
             self.handleNoCameraPermissions?(self)
+            
+            let alert = UIAlertController(title: "Allow access to Camera", message: "This allows you to share photos captured with the camera. Go to your settings and enable \"Camera\".", preferredStyle: .alert)
+            
+            let notNowAction = UIAlertAction(title: "Not Now", style: .default, handler: nil)
+            alert.addAction(notNowAction)
+            let openSettingsAction = UIAlertAction(title: "Open Settings", style: .default) { [unowned self] (_) in
+                // Open app privacy settings
+                self.gotoAppPrivacySettings()
+            }
+            alert.addAction(openSettingsAction)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -880,7 +901,7 @@ extension TLPhotosPickerViewController: PHPhotoLibraryChangeObserver {
             guard let changes = self.getChanges(changeInstance) else {
                 return
             }
-            
+            self.doneButton.isEnabled = self.selectedAssets.count > 0
             if changes.hasIncrementalChanges, self.configure.groupByFetch == nil {
                 var deletedSelectedAssets = false
                 var order = 0
