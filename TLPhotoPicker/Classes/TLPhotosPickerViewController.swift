@@ -693,7 +693,11 @@ extension TLPhotosPickerViewController: UIImagePickerControllerDelegate, UINavig
                 return
         }
 
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     private func handleDeniedCameraAuthorization() {
