@@ -1,6 +1,6 @@
 {
   "name": "TLPhotoPicker",
-  "version": "2.1.6",
+  "version": "2.1.9",
   "summary": "multiple phassets picker for iOS lib. like facebook",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/tilltue/TLPhotoPicker",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/tilltue/TLPhotoPicker.git",
-    "tag": "2.1.6"
+    "tag": "2.1.9"
   },
   "platforms": {
     "ios": "9.1"
