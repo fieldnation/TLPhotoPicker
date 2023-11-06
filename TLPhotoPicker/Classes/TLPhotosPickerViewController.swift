@@ -426,6 +426,7 @@ extension TLPhotosPickerViewController {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)]
         self.doneButton.setTitleTextAttributes(attributes, for: .normal)
         self.doneButton.title = self.configure.doneTitle
+        self.doneButton.isEnabled = false
         self.emptyView.isHidden = true
         self.emptyImageView.image = self.configure.emptyImage
         self.emptyMessageLabel.text = self.configure.emptyMessage
@@ -1323,7 +1324,7 @@ extension TLPhotosPickerViewController {
                 playVideo(asset: asset, indexPath: indexPath)
             }
         }
-
+        self.doneButton.isEnabled = self.selectedAssets.count > 0
     }
 }
 
